@@ -16,10 +16,12 @@ app.use(cookieParser());
 
 // CORS configuration to allow frontend access
 app.use(cors({
-    origin: "*",
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
+    origin: (origin, callback) => {
+        callback(null, true); // Allows all origins dynamically
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, // Allows cookies & authentication headers
 }));
-
 // API routes
 app.use("/api/auth", userRoute);
 
