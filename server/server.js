@@ -14,14 +14,12 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Cookie parser for authentication/session handling
 app.use(cookieParser());
 
-// CORS configuration to allow frontend access
 app.use(cors({
-    origin: (origin, callback) => {
-        callback(null, true); // Allows all origins dynamically
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Allows cookies & authentication headers
+  origin: "*", 
+  credentials: true 
 }));
+
+
 // API routes
 app.use("/api/auth", userRoute);
 
@@ -29,6 +27,10 @@ app.use("/api/auth", userRoute);
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: "Internal Server Error" });
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello from the backend!");
 });
 
 // Start the server
